@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>Последние 15 книг</h2>
+<form method="POST" action="{{ url_for('save') }}">
+    {% for book in books %}
+    <div class="book-info">
+        <h3>{{ book.title }}</h3>
+        <p><strong>Автор:</strong> {{ book.author }}</p>
+        <p><strong>Аннотация:</strong> {{ book.annotation }}</p>
+        <p><strong>Жанр:</strong> <a href="{{ url_for('books_by_genre', genre_id=book.genre.id) }}">{{ book.genre.name
+            }}</a></p>
+        <p><strong>Описание жанра:</strong> {{ book.genre.description }}</p>
+        <p><strong>Дата публикации:</strong> {{ book.publication_date.strftime("%d-%m-%Y") }}</p>
+        <label for="is_read_{{ book.id }}"><strong>Прочитана:</strong></label>
+        <input type="checkbox" id="is_read_{{ book.id }}" name="is_read_{{ book.id }}" {% if book.is_read %}checked{%
+               endif %}>
+        <input type="hidden" name="book_id_{{ book.id }}" value="{{ book.id }}">
+        <br><br>
+    </div>
+    <hr>
+    {% endfor %}
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}
