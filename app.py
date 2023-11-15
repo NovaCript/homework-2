@@ -44,7 +44,7 @@ with app.app_context():
 
 @app.route('/view/')
 def books():
-    books = Book.query.order_by(Book.publication_date).limit(15).all()
+    books = Book.query.order_by(Book.publication_date.desc()).limit(15).all()
     return render_template('viev_page_book.html', books=books)
 
 
